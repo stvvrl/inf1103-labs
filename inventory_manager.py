@@ -1,41 +1,40 @@
 import json
 import os
 
+from product import Product
+from inventory import Inventory
+
 
 def load_inventory():
+    inventory = Inventory()
+
     if os.path.exists("inventory.json"):
         file = open("inventory.json", "r")
-        inventory = json.load(file)
+        data = json.load(file)
         file.close()
+
+        for item in data:
+            product = Product(item["id"], item["name"], item["price"], item["stock"])
+            inventory.add_product(product)
+
         print("inventory.json found.")
         print("Inventory loaded successfully.")
-        return inventory
     else:
         print("No inventory.json found. Starting with empty inventory.")
-        return []
+
+    return inventory
 
 
 def save_inventory(inventory):
+    data = []
+
+    for product in inventory.get_products():
+        data.append(product.to_dict())
+
     file = open("inventory.json", "w")
-    json.dump(inventory, file, indent=4)
+    json.dump(data, file, indent=4)
     file.close()
     print("Inventory saved successfully to inventory.json.")
-
-
-def display_all(inventory):
-    if len(inventory) == 0:
-        print("No products in inventory.")
-    else:
-        print("Current Inventory")
-        print("-" * 48)
-
-        for product in inventory:
-            print("ID:", product["id"],
-                  "| Name:", product["name"],
-                  "| Price: $" + format(product["price"], ".2f"),
-                  "| Stock:", product["stock"])
-
-        print("-" * 48)
 
 
 def add_product(inventory):
@@ -43,7 +42,6 @@ def add_product(inventory):
 
     product_id = input("Product ID: ")
     product_name = input("Product Name: ")
-
     price = input("Price: ")
     stock = input("Stock Quantity: ")
 
@@ -54,24 +52,12 @@ def add_product(inventory):
         if price < 0 or stock < 0:
             print("Price and stock cannot be negative.")
         else:
-            found = False
+            new_product = Product(product_id, product_name, price, stock)
 
-            for product in inventory:
-                if product["id"] == product_id:
-                    found = True
-
-            if found:
-                print("Product ID already exists.")
-            else:
-                new_product = {
-                    "id": product_id,
-                    "name": product_name,
-                    "price": price,
-                    "stock": stock
-                }
-
-                inventory.append(new_product)
+            if inventory.add_product(new_product):
                 print("Product added successfully!")
+            else:
+                print("Product ID already exists.")
 
     except ValueError:
         print("Please enter a valid price and stock quantity.")
@@ -81,70 +67,58 @@ def update_stock(inventory):
     print("Update Stock")
     product_id = input("Enter Product ID: ")
 
-    found = False
+    product = inventory.search_product(product_id)
 
-    for product in inventory:
-        if product["id"] == product_id:
-            found = True
-            print("Product Found:")
-            print("Name:", product["name"])
-            print("Current Stock:", product["stock"])
-
-            new_stock = input("New Stock Quantity: ")
-
-            try:
-                new_stock = int(new_stock)
-
-                if new_stock < 0:
-                    print("Stock cannot be negative.")
-                else:
-                    product["stock"] = new_stock
-                    print("Stock updated successfully!")
-
-            except ValueError:
-                print("Please enter a valid whole number.")
-
-    if not found:
+    if product == None:
         print("Product not found.")
+    else:
+        print("Product Found:")
+        print("Name:", product.get_name())
+        print("Current Stock:", product.get_stock())
+
+        new_stock = input("New Stock Quantity: ")
+
+        try:
+            new_stock = int(new_stock)
+
+            if product.update_stock(new_stock):
+                print("Stock updated successfully!")
+            else:
+                print("Stock cannot be negative.")
+
+        except ValueError:
+            print("Please enter a valid whole number.")
 
 
 def search_product(inventory):
     print("Search Product")
     product_id = input("Enter Product ID: ")
 
-    found = False
+    product = inventory.search_product(product_id)
 
-    for product in inventory:
-        if product["id"] == product_id:
-            found = True
-            print("Product Found")
-            print("-" * 48)
-            print("ID:", product["id"])
-            print("Name:", product["name"])
-            print("Price: $" + format(product["price"], ".2f"))
-            print("Stock:", product["stock"])
-            print("-" * 48)
-
-    if not found:
+    if product == None:
         print("Product not found.")
+    else:
+        print("Product Found")
+        print("-" * 48)
+        product.display_information()
+        print("-" * 48)
 
 
 inventory = load_inventory()
 
 while True:
-    print("----------- MENU -----------")
     print("1. Display All Products")
     print("2. Add Product")
     print("3. Update Stock")
     print("4. Search Product")
     print("5. Save Inventory")
     print("6. Exit")
-    print("----------------------------")
 
     option = input("Enter option: ")
 
     if option == "1":
-        display_all(inventory)
+        inventory.display_all()
 
     elif option == "2":
         add_product(inventory)
