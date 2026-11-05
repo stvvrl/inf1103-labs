@@ -1,3 +1,21 @@
+commit 69367835c8bdbad7bf00e61c6331733ae6aa2067
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Nov 5 19:53:46 2026 +0800
+
+    Week 7: Bugfix, methods not called
+
+commit 8cab575a21fe9158876bcc64d09686be2ce23ca8
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Nov 5 19:38:31 2026 +0800
+
+    Week 7: OOP (Inheritance, Overriding, Abstract, Interfaces)
+
+commit da85024ef1919bd5770de652eec9fbeea6a32c92
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Nov 5 18:29:29 2026 +0800
+
+    Fix
+
 commit ba8cdf2d0d88b4277b2299b7353d9ef282364df7
 Author: stvvrl <2604737@sit.singaporetech.edu.sg>
 Date:   Thu Oct 29 20:11:26 2026 +0800
