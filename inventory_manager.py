@@ -1,8 +1,21 @@
 import json
 import os
 
-from product import Product
+from physical_product import PhysicalProduct
+from digital_product import DigitalProduct
 from inventory import Inventory
+
+
+def create_product_from_dict(item):
+    product_type = item.get("type")
+
+    if product_type == "physical":
+        return PhysicalProduct(item["id"], item["name"], item["price"],
+                               item["stock"], item["weight"])
+    elif product_type == "digital":
+        return DigitalProduct(item["id"], item["name"], item["price"],
+                              item["stock"], item["download_size"])
+    return None
 
 
 def load_inventory():
@@ -14,8 +27,11 @@ def load_inventory():
         file.close()
 
         for item in data:
-            product = Product(item["id"], item["name"], item["price"], item["stock"])
-            inventory.add_product(product)
+            product = create_product_from_dict(item)
+            if product == None:
+                print("Skipping product with unknown type:", item.get("id"))
+            else:
+                inventory.add_product(product)
 
         print("inventory.json found.")
         print("Inventory loaded successfully.")
@@ -39,20 +55,38 @@ def save_inventory(inventory):
 
 def add_product(inventory):
     print("Add New Product")
+    print("1. Physical Product")
+    print("2. Digital Product")
+    product_type = input("Choose product type: ")
+
+    if product_type != "1" and product_type != "2":
+        print("Invalid product type. Please enter 1 or 2.")
+        return
 
     product_id = input("Product ID: ")
     product_name = input("Product Name: ")
     price = input("Price: ")
     stock = input("Stock Quantity: ")
 
+    if product_type == "1":
+        extra = input("Weight (kg): ")
+    else:
+        extra = input("Download Size (MB): ")
+
     try:
         price = float(price)
         stock = int(stock)
+        extra = float(extra)
 
-        if price < 0 or stock < 0:
-            print("Price and stock cannot be negative.")
+        if price < 0 or stock < 0 or extra < 0:
+            print("Price, stock and weight/download size cannot be negative.")
         else:
-            new_product = Product(product_id, product_name, price, stock)
+            if product_type == "1":
+                new_product = PhysicalProduct(product_id, product_name,
+                                              price, stock, extra)
+            else:
+                new_product = DigitalProduct(product_id, product_name,
+                                             price, stock, extra)
 
             if inventory.add_product(new_product):
                 print("Product added successfully!")
@@ -60,7 +94,7 @@ def add_product(inventory):
                 print("Product ID already exists.")
 
     except ValueError:
-        print("Please enter a valid price and stock quantity.")
+        print("Please enter valid numbers for price, stock and weight/download size.")
 
 
 def update_stock(inventory):
@@ -102,43 +136,49 @@ def search_product(inventory):
         print("Product Found")
         print("-" * 48)
         product.display_information()
+        print("Fulfilment:", product.get_fulfilment_info())
         print("-" * 48)
 
 
-inventory = load_inventory()
+def main():
+    inventory = load_inventory()
 
-while True:
-    print("1. Display All Products")
-    print("2. Add Product")
-    print("3. Update Stock")
-    print("4. Search Product")
-    print("5. Save Inventory")
-    print("6. Exit")
+    while True:
+        print("1. Display All Products")
+        print("2. Add Product")
+        print("3. Update Stock")
+        print("4. Search Product")
+        print("5. Save Inventory")
+        print("6. Exit")
 
-    option = input("Enter option: ")
+        option = input("Enter option: ")
 
-    if option == "1":
-        inventory.display_all()
+        if option == "1":
+            inventory.display_all()
 
-    elif option == "2":
-        add_product(inventory)
+        elif option == "2":
+            add_product(inventory)
 
-    elif option == "3":
-        update_stock(inventory)
+        elif option == "3":
+            update_stock(inventory)
 
-    elif option == "4":
-        search_product(inventory)
+        elif option == "4":
+            search_product(inventory)
 
-    elif option == "5":
-        print("Saving inventory...")
-        save_inventory(inventory)
+        elif option == "5":
+            print("Saving inventory...")
+            save_inventory(inventory)
 
-    elif option == "6":
-        print("Saving inventory before exit...")
-        save_inventory(inventory)
-        print("Thank you for using Inventory Management System.")
-        print("Program terminated.")
-        break
+        elif option == "6":
+            print("Saving inventory before exit...")
+            save_inventory(inventory)
+            print("Thank you for using Inventory Management System.")
+            print("Program terminated.")
+            break
 
-    else:
-        print("Invalid option. Please enter 1 to 6.")
+        else:
+            print("Invalid option. Please enter 1 to 6.")
+
+
+if __name__ == "__main__":
+    main()

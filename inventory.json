@@ -2,25 +2,49 @@
     {
         "id": "P001",
         "name": "Laptop",
-        "price": 1200.0,
-        "stock": 15
+        "price": 3000.0,
+        "stock": 10,
+        "type": "physical",
+        "weight": 1.8
     },
     {
         "id": "P002",
         "name": "Mouse",
-        "price": 25.5,
-        "stock": 40
+        "price": 30.0,
+        "stock": 50,
+        "type": "physical",
+        "weight": 0.1
     },
     {
         "id": "P003",
         "name": "Keyboard",
-        "price": 45.0,
-        "stock": 25
+        "price": 90.0,
+        "stock": 40,
+        "type": "physical",
+        "weight": 0.9
     },
     {
         "id": "P004",
         "name": "Monitor",
-        "price": 299.99,
-        "stock": 10
+        "price": 300.0,
+        "stock": 25,
+        "type": "physical",
+        "weight": 4.5
+    },
+    {
+        "id": "D001",
+        "name": "Clip Studio Paint",
+        "price": 75.0,
+        "stock": 999,
+        "type": "digital",
+        "download_size": 2120.0
+    },
+    {
+        "id": "D002",
+        "name": "Google Chrome",
+        "price": 0,
+        "stock": 999,
+        "type": "digital",
+        "download_size": 850.5
     }
 ]
