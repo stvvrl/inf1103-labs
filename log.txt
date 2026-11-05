@@ -1,3 +1,15 @@
+commit ba8cdf2d0d88b4277b2299b7353d9ef282364df7
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Oct 29 20:11:26 2026 +0800
+
+    Week 6
+
+commit ed90c62236eab7f391a52bf7b4350049a69478f9
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Oct 29 19:05:41 2026 +0800
+
+    .
+
 commit d5e9f75f02d682f85b7f8da2c6cb368614e1a1e5
 Author: stvvrl <2604737@sit.singaporetech.edu.sg>
 Date:   Fri Oct 9 18:47:35 2026 +0800

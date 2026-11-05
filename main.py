@@ -11,3 +11,6 @@
 # git commit -m "Commit message"
 # Sends changes to remote repository (GitHub)
 # git push
+
+# generating git log
+# git log > log.txt
