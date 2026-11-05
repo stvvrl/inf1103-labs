@@ -10,11 +10,9 @@ def create_product_from_dict(item):
     product_type = item.get("type")
 
     if product_type == "physical":
-        return PhysicalProduct(item["id"], item["name"], item["price"],
-                               item["stock"], item["weight"])
+        return PhysicalProduct(item["id"], item["name"], item["price"], item["stock"], item["weight"])
     elif product_type == "digital":
-        return DigitalProduct(item["id"], item["name"], item["price"],
-                              item["stock"], item["download_size"])
+        return DigitalProduct(item["id"], item["name"], item["price"], item["stock"], item["download_size"])
     return None
 
 
@@ -82,11 +80,9 @@ def add_product(inventory):
             print("Price, stock and weight/download size cannot be negative.")
         else:
             if product_type == "1":
-                new_product = PhysicalProduct(product_id, product_name,
-                                              price, stock, extra)
+                new_product = PhysicalProduct(product_id, product_name, price, stock, extra)
             else:
-                new_product = DigitalProduct(product_id, product_name,
-                                             price, stock, extra)
+                new_product = DigitalProduct(product_id, product_name, price, stock, extra)
 
             if inventory.add_product(new_product):
                 print("Product added successfully!")

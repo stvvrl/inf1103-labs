@@ -22,7 +22,6 @@ class PhysicalProduct(Product, CanBeShipped):
         return "Physical product: requires warehouse storage and physical shipping."
 
     def calculate_shipping_cost(self):
-        # Simple rule: flat base fee plus a charge per kilogram.
         return self.BASE_SHIPPING_COST + self.COST_PER_KG * self.__weight
 
     def to_dict(self):
