@@ -1,3 +1,15 @@
+commit edc06a441e4b4c447edbecba8a4abe14ba29389b
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 13:28:36 2026 +0800
+
+    W11L8: Testing
+
+commit 36523de14043c70920d7548a21b5ab8aa4aba2d6
+Author: stvvrl <2604737@sit.singaporetech.edu.sg>
+Date:   Thu Nov 5 20:31:29 2026 +0800
+
+    Week 7: log.txt
+
 commit 69367835c8bdbad7bf00e61c6331733ae6aa2067
 Author: stvvrl <2604737@sit.singaporetech.edu.sg>
 Date:   Thu Nov 5 19:53:46 2026 +0800
